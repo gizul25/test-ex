@@ -30,4 +30,31 @@ public class StringUtilsTests
 
         Assert.Equal(expected, result);
     }
+
+    [Theory]
+    [InlineData("  a a", 2)]
+    // Practically incorrect handling of Unicode whitespace symbols doesn't cause issues
+    [InlineData("\u00A0\u00A0b b", 2)]
+    [InlineData("\u2000\u2000c c", 2)]
+    public void WordCount_UnicodeWhitespaceStart(string input, int expected)
+    {
+        var stringUtils = new StringUtils();
+
+        var result = stringUtils.WordCount(input);
+
+        Assert.Equal(expected, result);
+    }
+
+    [Theory]
+    [InlineData("  e e", 2)]
+    [InlineData(" \u00A0\u2000f f", 2)]
+    [InlineData("\u00A0 \u2000g g", 2)]
+    public void WordCount_UnicodeWhitespaceStart2(string input, int expected)
+    {
+        var stringUtils = new StringUtils();
+
+        var result = stringUtils.WordCount(input);
+
+        Assert.Equal(expected, result);
+    }
 }
