@@ -17,4 +17,17 @@ public class StringUtilsTests
 
         Assert.Equal(expected, result);
     }
+
+    [Theory]
+    [InlineData("a   b", 2)]
+    [InlineData("a\u00A0\u00A0\u00A0c", 2)]
+    [InlineData("a\u2000\u2000\u2000d", 2)]
+    public void WordCount_UnicodeMultipleWhitespaceSymbols(string input, int expected)
+    {
+        var stringUtils = new StringUtils();
+
+        var result = stringUtils.WordCount(input);
+
+        Assert.Equal(expected, result);
+    }
 }
